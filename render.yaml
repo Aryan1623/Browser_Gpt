@@ -1,9 +1,7 @@
 services:
   - type: web
     name: browser-gpt
-    env: node
-    buildCommand: |
-      apt-get update && apt-get install -y python3 python3-pip
-      npm install
-      pip3 install -r requirements.txt
-    startCommand: node index.js
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+
