@@ -1,27 +1,37 @@
-# Use an official Node.js image that has Debian underneath
-FROM node:18
+FROM python:3.10-slim
 
-# Install Python and pip
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# Set working directory
 WORKDIR /app
 
-# Copy package and requirements
+# Copy dependency files
 COPY package*.json ./
 COPY requirements.txt ./
 
-# Install Node dependencies
+# Install Node.js dependencies
 RUN npm install
 
 # Install Python dependencies
-RUN pip3 install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Copy all source code
+# Copy the rest of the code
 COPY . .
 
-# Expose your app's port (adjust if needed)
+# Expose port (adjust if needed)
 EXPOSE 10000
 
-# Start your server
+# Start the server
 CMD ["node", "index.js"]
+
