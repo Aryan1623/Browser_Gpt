@@ -6,3 +6,4 @@ torch==2.2.1
 fpdf==1.7.2
 python-dotenv==1.0.1
 
+
