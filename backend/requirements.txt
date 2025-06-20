@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-flask
-transformers
-torch
-fpdf
-python-dotenv
